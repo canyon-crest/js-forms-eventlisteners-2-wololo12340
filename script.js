@@ -56,7 +56,6 @@ document.getElementById('btnCalc').addEventListener('click', function(){
             break;
         }
     }
-})
 //   a) Get the selected size price:
 //      Use document.getElementsByName("rg") to get all
 //      size radio buttons. Loop through them to find the
@@ -84,8 +83,8 @@ let toppingsPrice = toppingsCount * 0.5;
 //        "takeout"  → 1.50
 //        "delivery" → 3.00
 let serviceFee = 0;
-let services = document.getElementsById("serviceSelect").value;
-if (service === "dine in"){
+let service = document.getElementById("serviceSelect").value;
+if (service === "dinein"){
     serviceFee = 0;
 } else if (service === 'takeout') {
     serviceFee = 1.5;
@@ -97,12 +96,16 @@ if (service === "dine in"){
 let total = sizePrice + toppingsPrice + serviceFee;
 //   e) Get the customer name from the input with ID "myInput"
 let customerName = document.getElementById("myInput").value;
+if (customerName.trim() === "") {
+    customerName = "Customer";
+}
 //   f) Display the result in the element with ID "myPara":
 //      "[name], your total is $[total]"
 //      Use .toFixed(2) to format the total.
 //      Example: "Alice, your total is $13.50"
 //      If name is empty, use "Customer" as the default.
-
+document.getElementById("myPara").innerHTML = customerName + ", your total is $" + total.toFixed(2);
+});
 
 // STEP 4: Get the "Clear" button by ID ("clearBtn")
 //         Add a click event listener.
@@ -112,3 +115,15 @@ let customerName = document.getElementById("myInput").value;
 //         c) Uncheck ALL topping checkboxes (loop through them)
 //         d) Set the service dropdown value to "dinein"
 //         e) Set the output paragraph innerHTML to ""
+document.getElementById("clearBtn").addEventListener("click", function(){
+    document.getElementById("myInput").value = "";
+
+    document.getElementById("r3").checked = true;
+    let toppings = document.getElementsByName("cb");
+    for (let i = 0; i < toppings.length; ++i){
+        toppings[i].checked = false;
+    }
+
+    document.getElementById("serviceSelect").value = "dinein";
+    document.getElementById("myPara").innerHTML = "";
+})
